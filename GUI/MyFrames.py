@@ -5,7 +5,6 @@ from threading import Thread
 from tkinter import messagebox, ttk
 from tkinter.filedialog import askopenfilename
 from tkinter.scrolledtext import ScrolledText
-from tkinter.ttk import Style
 
 import matplotlib.backends.backend_tkagg as tkagg
 from matplotlib import pyplot as plt
@@ -90,9 +89,6 @@ class GuiLogic(tk.Frame):
     def select_plots(self):
         global ad_new_tab_flag
 
-        style = Style()
-        style.theme_use('clam')
-
         self.selected.set(1)
         self.notebook_settings.grid_remove()
 
@@ -122,7 +118,6 @@ class GuiLogic(tk.Frame):
 
                 self.notebook_plots.counter += 1
 
-        self.main_frame.create_plot_btn["state"] = "normal"
         self.main_frame.plots_radio['state'] = 'normal'
         self.main_frame.settings_btn['state'] = 'normal'
         self.notebook_plots.grid(row=0, column=0, sticky="nswe")
@@ -150,13 +145,6 @@ class GuiLogic(tk.Frame):
     def insert_sites_names(self, parent):
         for child in parent.winfo_children():
             child.destroy()
-
-        s = Style()
-        s.theme_use('clam')
-        s.configure('Custom.TCheckbutton', background="white", font=("Helvetica", 15))
-        s.configure('Custom.TFrame', background="white")
-        s.configure('Yellow.TButton', background="yellow")
-        s.configure('Green.TButton', background="green", activebackground="green")
 
         scrolled_text = ScrolledText(parent, width=20, height=10)
         scrolled_text.grid(row=0, column=0, sticky="nwse")
@@ -190,11 +178,7 @@ class GuiLogic(tk.Frame):
         self.notebook_settings.add(frame, text='SETTINGS')
         self.notebook_settings.counter += 1
 
-        style = ttk.Style()
-        style.theme_use("clam")
-        style.configure('Settings.TLabel', background='white')
         font = ("Helvetica", 12)
-        style.configure("Settings.TLabel", foreground="black", font=('Helvetica normal', 10), background="white")
         ttk.Label(frame, style='Settings.TLabel', text='Destination IP = ', font=font).grid(row=0, column=0,
                                                                                             sticky="e")
         ttk.Label(frame, style='Settings.TLabel', text='Destination Port = ', font=font).grid(row=1, column=0,
@@ -237,13 +221,9 @@ class CreateMainFrame:
         self.message_frame = tk.Frame(self.parent, bg="#e6e6e6")
 
         # buttons
-        style = Style()
-        style.theme_use('clam')
-        style.configure('Custom.TRadiobutton', background="#d8d8d8")
         self.load_pcap_btn = ttk.Button(self.left_frame, text="Load Pcap", width=10)
         self.plots_radio = ttk.Radiobutton(self.left_frame, text='Plots\t', width=10)
         self.settings_btn = ttk.Button(self.left_frame, text='Settings', width=10)
-        self.create_plot_btn = ttk.Button(self.left_frame, text='Create Plot', width=10)
 
         self.message_label_left = tk.Label(self.message_frame, bg="#e6e6e6", fg="green", text="", padx=10)
         self.message_label_middle = tk.Label(self.message_frame, bg="#e6e6e6", fg="green", text="",
@@ -287,5 +267,4 @@ class CreateMainFrame:
 
         self.load_pcap_btn.grid(row=0, column=0, padx=5, pady=5)
         self.plots_radio.grid(row=1, column=0, padx=5, pady=5)
-        self.settings_btn.grid(row=4, column=0, padx=5, pady=5)
-        self.create_plot_btn.grid(row=3, column=0, padx=5, pady=5)
+        self.settings_btn.grid(row=3, column=0, padx=5, pady=5)

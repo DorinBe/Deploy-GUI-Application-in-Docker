@@ -1,9 +1,9 @@
 import tkinter as tk
-from tkinter.ttk import Style
 
 import pyautogui as pg
 
 from GUI import MyFrames
+from GUI.Styles import MyStyle
 
 MAX_X, MAX_Y = 1200, 800
 
@@ -11,7 +11,7 @@ MAX_X, MAX_Y = 1200, 800
 class StartGUI:
     def __init__(self):
         window = tk.Tk()  # create root window
-        Style().theme_use('clam')
+        ms = MyStyle()
         window.title(f"PyGames")  # title of the GUI window
         place_center(window, width=MAX_X, height=MAX_Y)
         MyFrames.GuiLogic(window)
