@@ -28,11 +28,11 @@ class AsyncPcap2Bin(Thread):
         stop_pcap_bool = False
         start = datetime.now()
         dct = {}
-        i=0
+        # i=0
         for pkt in self.packets:
-            if i == 100:
-                break
-            i+=1
+            # if i == 100:
+            #     break
+            # i+=1
             mystring = pkt.dns.qry_name.split('.')[1]
             mystring = f'{mystring}'
             if mystring in dct:
