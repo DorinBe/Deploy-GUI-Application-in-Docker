@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk as ttk
 
 
-class CreateMainFrame:
+class CreateMainFrame(ttk.Frame):
     """
     |---------------------------|
     |           Top Level       |
@@ -20,6 +20,7 @@ class CreateMainFrame:
     """
 
     def __init__(self, parent):
+        super().__init__(parent)
         self.parent = parent
 
         # photos
