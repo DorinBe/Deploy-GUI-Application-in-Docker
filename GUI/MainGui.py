@@ -27,7 +27,7 @@ class StartGUI(ttk.Frame):
         self.window = parent
         MyStyle()
         self.window.title(f"PySurfs")  # title of the GUI window
-        self.window.iconbitmap("icon.ico")
+        self.window.iconbitmap("icon2.ico")
         place_center(self.window, width=MAX_X, height=MAX_Y)
 
         self.path = ""

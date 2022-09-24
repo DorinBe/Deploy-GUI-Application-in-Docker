@@ -26,7 +26,7 @@ class CreateMainFrame(ttk.Frame):
         self.parent = parent
 
         # photos
-        self.image_smting = Image.open('logo.png')
+        self.image_smting = Image.open('logo2.png')
         self.image_smting.thumbnail((200, 200))
         self.image_smting = ImageTk.PhotoImage(self.image_smting)
 
