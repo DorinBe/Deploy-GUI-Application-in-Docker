@@ -1,5 +1,6 @@
 from tkinter.ttk import Style
 
+font_normal = ("Helvetica", 12)
 
 class MyStyle:
 

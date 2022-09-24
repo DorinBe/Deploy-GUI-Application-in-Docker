@@ -3,8 +3,6 @@ from tkinter import ttk as ttk
 
 from PIL import Image, ImageTk
 
-from GUI.Buttons import BlueYellowBtn
-
 
 class CreateMainFrame(ttk.Frame):
     """
@@ -76,8 +74,6 @@ class CreateMainFrame(ttk.Frame):
         self.message_label_middle.grid(row=0, column=1, sticky="ew")
         self.message_label_right.grid(row=0, column=2, sticky='ew')
 
-        # tk.Label(self.parent, fg="#0061A1", text="Sites Statistics", font='Arial 20 normal') \
-        #     .grid(row=0, column=1, sticky="nswe", padx=350)
         tk.Label(self.top_frame, fg="#0061A1", image=self.image_smting).grid(row=0, column=0)
 
         self.load_pcap_btn.grid(row=0, column=0, padx=5, pady=5)

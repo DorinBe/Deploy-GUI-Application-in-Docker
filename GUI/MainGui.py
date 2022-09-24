@@ -7,15 +7,16 @@ from tkinter.filedialog import askopenfilename
 from tkinter.scrolledtext import ScrolledText
 
 import matplotlib.backends.backend_tkagg as tkagg
+import numpy as np
 import pyautogui as pg
 from matplotlib import pyplot as plt
 
-from GUI import Notebooks, FeedbackWidgets, MainFrame
+from GUI import Notebooks, FeedbackWidgets, MainFrame, Styles
 from GUI.Notebooks import MyFrame
 from GUI.Styles import MyStyle
 from Logic import AppBoot, PcapLogic
 
-MAX_X, MAX_Y = 1200, 800
+MAX_X, MAX_Y = 1300, 800
 
 # tabs globals
 ad_new_tab_flag = False
@@ -122,7 +123,9 @@ class StartGUI(ttk.Frame):
                 toolbar.update()
                 toolbar.grid(row=1, column=0)
                 y = remove.iloc[:1].values[0]
-                plt.barh(remove.columns.values[20 * i:20 * i + 20], y[20 * i:20 * i + 20])
+                plt.barh((remove.columns.values[20 * i:20 * i + 20]), y[20 * i:20 * i + 20], color="#73B8FA", edgecolor="#73B8FA")
+                plt.xticks(np.arange(min(y[20 * i:20 * i + 20]), max(y[20 * i:20 * i + 20])+1, 1.0))
+                # plt.grid(color="#EDF6FF")
 
                 self.notebook_plots.counter += 1
 
