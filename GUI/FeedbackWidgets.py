@@ -13,15 +13,15 @@ class AsyncPcap2Bin(Thread):
     def change_text(self):
         match self.counter:
             case 0:
-                self.master.config(text="Converting pcap to bin.")
+                self.master.config(text="Analyzing pcap .")
             case 1:
-                self.master.config(text="Converting pcap to bin..")
+                self.master.config(text="Analyzing pcap ..")
             case 2:
-                self.master.config(text="Converting pcap to bin...")
+                self.master.config(text="Analyzing pcap ...")
         self.counter += 1
         self.counter %= 3
         if PcapLogic.stop_pcap_bool:
-            self.master.config(text="Finished converting pcap to bin")
+            self.master.config(text="Finished Analyzing pcap")
             return
         self.master.after(1000, self.change_text)
 

@@ -1,5 +1,5 @@
 from tkinter import ttk
-from tkinter.ttk import Style
+from GUI.Styles import my_style
 
 
 class MainFrame(ttk.Frame):
@@ -9,7 +9,5 @@ class MainFrame(ttk.Frame):
         self.grid(row=0, column=0)
         container.grid_columnconfigure(0, weight=1)
 
-        s = Style()
-        s.configure('Custom.TLabel', foreground="green")
-        self.label = ttk.Label(self, style='Custom.TLabel', text="PyGames", font=('Arial', 20))
+        self.label = ttk.Label(self, style='GreenForeground.TLabel', text="PyGames", font=('Arial', 20))
         self.label.grid(row=0, column=0)
