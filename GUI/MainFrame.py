@@ -3,6 +3,8 @@ from tkinter import ttk as ttk
 
 from PIL import Image, ImageTk
 
+from GUI.Buttons import BlueYellowBtn
+
 
 class CreateMainFrame(ttk.Frame):
     """
@@ -37,9 +39,9 @@ class CreateMainFrame(ttk.Frame):
         self.message_frame = tk.Frame(self.parent, bg="#e6e6e6")
 
         # buttons
-        self.load_pcap_btn = ttk.Button(self.left_frame, text="Load Pcap", width=10)
-        self.plots_radio = ttk.Radiobutton(self.left_frame, text='Plots\t', width=10)
-        self.settings_btn = ttk.Button(self.left_frame, text='Settings', width=10)
+        self.load_pcap_btn = ttk.Button(master=self.left_frame, text="Load Pcap", width=10, style='Blue.TButton')
+        self.plots_radio = ttk.Radiobutton(self.left_frame, text='Plots\t', width=10, style='Blue.TRadiobutton')
+        self.settings_btn = ttk.Button(self.left_frame, text='Settings', width=10, style="Blue.TButton")
 
         self.message_label_left = tk.Label(self.message_frame, bg="#e6e6e6", fg="green", text="", padx=10)
         self.message_label_middle = tk.Label(self.message_frame, bg="#e6e6e6", fg="green", text="",
@@ -49,9 +51,7 @@ class CreateMainFrame(ttk.Frame):
         self.create_main_frame()
 
     def create_main_frame(self):
-        # self.parent.grid_columnconfigure(0, weight=1)
         self.parent.grid_columnconfigure(1, weight=1)
-        # self.parent.grid_columnconfigure(2, weight=1)
         self.parent.grid_rowconfigure(2, weight=10)
 
         self.top_frame.grid(row=0, column=0, columnspan=3, sticky="nswe")
