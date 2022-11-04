@@ -16,6 +16,9 @@ from GUI.AppWidgets import MyFrame
 from GUI.Styles import MyStyle
 from Logic import AppBoot, PcapLogic
 
+import ctypes
+import threading
+
 MAX_X, MAX_Y = 1300, 800
 
 # tabs globals
@@ -55,7 +58,20 @@ class StartGUI(ttk.Frame):
 
         self.selected.set(-1)
 
+    def stop_threads(self):
+        print("thread list: ", thread_list := threading.enumerate())
+        for thread in thread_list:
+            if thread.name != 'MainThread' and 'pydev' not in thread.name:
+                ctypes.pythonapi.PyThreadState_SetAsyncExc(thread.ident, ctypes.py_object(SystemExit))
+                thread.join()
+        PcapLogic.stop_pcap_bool = True
+        self.main_frame.message_label_middle.config(text="")
+        print(f"thread list after remove: ", threading.enumerate())
+        PcapLogic.stop_pcap_bool = False
+
+
     def open_file(self, extension, dest_port):
+        self.stop_threads()
 
         self.selected.set(-1)
         title = "Please choose " + extension + " file to work with"
