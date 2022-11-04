@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
+from tkinter import ttk, Menu
+
 
 # Copyright (c) Muhammet Emin TURGUT 2020
 # For license see LICENSE
-from tkinter import *
-from tkinter import ttk
-
-
 class ScrollableNotebook(ttk.Frame):
     def __init__(self, parent, wheelscroll=True, tabmenu=True, *args, **kwargs):
         super().__init__(master=parent)
@@ -145,3 +142,21 @@ class ScrollableNotebook(ttk.Frame):
     def enable_traversal(self):
         self.notebookContent.enable_traversal()
         self.notebookTab.enable_traversal()
+
+class MyNotebook(ScrollableNotebook):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.counter = 0
+        self.tabs = []
+        self.grid_remove()
+
+
+class MyFrame(ttk.Frame):
+
+    def __init__(self, master):
+        super().__init__(master)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_propagate(True)
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)

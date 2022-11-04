@@ -5,14 +5,14 @@ from threading import Thread
 from tkinter import messagebox, ttk
 from tkinter.filedialog import askopenfilename
 from tkinter.scrolledtext import ScrolledText
+from tkinter.ttk import Entry
 
 import matplotlib.backends.backend_tkagg as tkagg
-import numpy as np
 import pyautogui as pg
 from matplotlib import pyplot as plt
 
-from GUI import Notebooks, FeedbackWidgets, MainFrame, Styles
-from GUI.Notebooks import MyFrame
+from GUI import AppWidgets, FeedbackWidgets, MainFrame
+from GUI.AppWidgets import MyFrame
 from GUI.Styles import MyStyle
 from Logic import AppBoot, PcapLogic
 
@@ -35,17 +35,15 @@ class StartGUI(ttk.Frame):
         self.main_window = self.window
         self.selected = tk.IntVar()
         self.vars = []
-        self.btns = []
+        self.btns = [ttk.Checkbutton()]
 
         self.main_frame = MainFrame.CreateMainFrame(self.main_window)
         self.ab = AppBoot.AppBoot(self.main_frame.message_label_middle)
         self.initial_program()
 
         # Notebooks
-        self.notebook_plots = Notebooks.MyNotebook(self.main_frame.right_frame)
-        self.notebook_settings = Notebooks.MyNotebook(self.main_frame.right_frame)
-
-
+        self.notebook_plots = AppWidgets.MyNotebook(self.main_frame.right_frame)
+        self.notebook_settings = AppWidgets.MyNotebook(self.main_frame.right_frame)
 
     def initial_program(self):
         # set functionalities to buttons
@@ -69,7 +67,7 @@ class StartGUI(ttk.Frame):
 
         # clear graphs and notebooks data
         self.notebook_plots = self.notebook_plots.destroy()
-        self.notebook_plots = Notebooks.MyNotebook(self.main_frame.right_frame)
+        self.notebook_plots = AppWidgets.MyNotebook(self.main_frame.right_frame)
 
         def insert_to_gui_thread():
             self.after_idle(self.select_plots)
@@ -123,7 +121,8 @@ class StartGUI(ttk.Frame):
                 toolbar.update()
                 toolbar.grid(row=1, column=0)
                 y = remove.iloc[:1].values[0]
-                plt.barh((remove.columns.values[20 * i:20 * i + 20]), y[20 * i:20 * i + 20], color="#73B8FA", edgecolor="#73B8FA")
+                plt.barh((remove.columns.values[20 * i:20 * i + 20]), y[20 * i:20 * i + 20], color="#73B8FA",
+                         edgecolor="#73B8FA")
                 # plt.xticks(np.arange(min(y[20 * i:20 * i + 20]), max(y[20 * i:20 * i + 20])+1, 1.0))
                 # plt.grid(color="#EDF6FF")
 
@@ -160,6 +159,13 @@ class StartGUI(ttk.Frame):
         scrolled_text = ScrolledText(parent, width=20, height=10)
         scrolled_text.grid(row=0, column=0, sticky="nwse")
 
+        search_frame = ttk.Frame(parent,style='Custom.TFrame')
+        search_frame.grid(row=0, column=1)
+        search_label = ttk.Label(search_frame, style="Settings.TLabel", text='Search')
+        search_label.grid(row=0,column=1)
+        search_entry = Entry(search_frame)
+        search_entry.grid(row=1, column=1)
+
         sites = AppBoot.sites_dict.get('sites').split(':')
 
         btn = ttk.Checkbutton
@@ -177,12 +183,28 @@ class StartGUI(ttk.Frame):
             scrolled_text.insert('end', '\n')
             i += 1
 
+        def get(event):
+            to_search = search_entry.get()
+            if to_search:
+                for check_btn in self.btns:
+                    if to_search == check_btn.cget("text"):
+                        scrolled_text.tag_add('found', check_btn, check_btn)
+                        scrolled_text.see(check_btn)
+                        check_btn.configure(style='Selected.TCheckbutton')
+                    elif to_search in check_btn.cget("text"):
+                        scrolled_text.tag_add('found', check_btn, check_btn)
+                        scrolled_text.see(check_btn)
+                        check_btn.configure(style='Selected.TCheckbutton')
+                    else:
+                        check_btn.configure(style='Custom.TCheckbutton')
+
+        search_entry.bind("<Return>", get)
         self.notebook_settings.update()
 
     def update_select_plots(self, site_name, btn_state):
         AppBoot.add_new_param_to_ini(site_name, btn_state)
         self.notebook_plots = self.notebook_plots.destroy()
-        self.notebook_plots = Notebooks.MyNotebook(self.main_frame.right_frame)
+        self.notebook_plots = AppWidgets.MyNotebook(self.main_frame.right_frame)
 
     def create_settings_tab(self):
         self.notebook_settings.tabs.append(frame := tk.Frame(self.notebook_settings, bg='white'))  # tab[1]

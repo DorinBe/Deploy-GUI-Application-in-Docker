@@ -28,11 +28,12 @@ class AsyncPcap2Bin(Thread):
         stop_pcap_bool = False
         start = datetime.now()
         dct = {}
-        # i=0
+        i=0
+
         for pkt in self.packets:
-            # if i == 100:
-            #     break
-            # i+=1
+            if i == 100:
+                break
+            i+=1
             mystring = pkt.dns.qry_name.split('.')[1]
             mystring = f'{mystring}'
             if mystring in dct:
@@ -46,3 +47,10 @@ class AsyncPcap2Bin(Thread):
         stop_pcap_bool = True
         end = datetime.now()
         print("Pcap2Values: ", end - start)
+
+
+if __name__ == '__main__':
+    thread = AsyncPcap2Bin(path=r'C:\Users\97254\Desktop\mergedPcap.pcapng',
+                           dest_port='53',
+                           message_label=None)
+    thread.start()
