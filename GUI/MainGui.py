@@ -1,6 +1,4 @@
-import ctypes
 import math
-import threading
 import time
 import tkinter as tk
 from threading import Thread
@@ -71,8 +69,16 @@ class StartGUI(ttk.Frame):
         print(f"thread list after remove: ", threading.enumerate())
         PcapLogic.stop_pcap_bool = False
 
-
     def open_file(self, extension, dest_port):
+
+        def insert_to_gui_thread():
+            self.after_idle(self.select_plots)
+
+        def check_pcap(callback):
+            while not PcapLogic.stop_pcap_bool:
+                time.sleep(3)
+            callback()
+
         self.stop_threads()
 
         self.selected.set(-1)
@@ -86,14 +92,6 @@ class StartGUI(ttk.Frame):
         # clear graphs and notebooks data
         self.notebook_plots = self.notebook_plots.destroy()
         self.notebook_plots = AppWidgets.MyNotebook(self.main_frame.right_frame)
-
-        def insert_to_gui_thread():
-            self.after_idle(self.select_plots)
-
-        def check_pcap(callback):
-            while not PcapLogic.stop_pcap_bool:
-                time.sleep(3)
-            callback()
 
         if extension == "pcapng" or extension == "pcap":
             t = PcapLogic.AsyncPcap2Bin(self.path, dest_port, self.main_frame.message_label_middle)
@@ -177,10 +175,10 @@ class StartGUI(ttk.Frame):
         scrolled_text = ScrolledText(parent, width=20, height=10)
         scrolled_text.grid(row=0, column=0, sticky="nwse")
 
-        search_frame = ttk.Frame(parent,style='Custom.TFrame')
+        search_frame = ttk.Frame(parent, style='Custom.TFrame')
         search_frame.grid(row=0, column=1)
         search_label = ttk.Label(search_frame, style="Settings.TLabel", text='Search')
-        search_label.grid(row=0,column=1)
+        search_label.grid(row=0, column=1)
         search_entry = Entry(search_frame)
         search_entry.grid(row=1, column=1)
 
@@ -239,21 +237,6 @@ class StartGUI(ttk.Frame):
         port_entry.grid(row=0, column=1)
         port_entry.insert(0, self.ab.dest_port)
 
-    def stop_threads(self):
-        thread_list = threading.enumerate()
-        print(f"thread list: {thread_list}")
-        for thread in thread_list:
-            if thread.name != 'MainThread' and 'pydev' not in thread.name:
-                res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread.ident, ctypes.py_object(SystemExit))
-                thread.join()
-
-        thread_list = threading.enumerate()
-        print(f"thread list after remove: {thread_list}")
-
-        PcapLogic.stop_pcap_bool = True
-        print(f"stopped feedback threads")
-        self.main_frame.message_label_middle.config(text="")
-
 
 def place_center(w1, width, height):  # Placing the window in the center of the screen
     reso = pg.size()
@@ -264,4 +247,3 @@ def place_center(w1, width, height):  # Placing the window in the center of the 
     width_str = str(width)
     height_str = str(height)
     w1.geometry(width_str + "x" + height_str + "+" + str(x) + "+" + str(y))
-
