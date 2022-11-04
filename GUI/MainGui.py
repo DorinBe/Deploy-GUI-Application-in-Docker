@@ -1,4 +1,6 @@
+import ctypes
 import math
+import threading
 import time
 import tkinter as tk
 from threading import Thread
@@ -56,6 +58,7 @@ class StartGUI(ttk.Frame):
         self.selected.set(-1)
 
     def open_file(self, extension, dest_port):
+        self.stop_threads()
 
         self.selected.set(-1)
         title = "Please choose " + extension + " file to work with"
@@ -221,6 +224,21 @@ class StartGUI(ttk.Frame):
         port_entry.grid(row=0, column=1)
         port_entry.insert(0, self.ab.dest_port)
 
+    def stop_threads(self):
+        thread_list = threading.enumerate()
+        print(f"thread list: {thread_list}")
+        for thread in thread_list:
+            if thread.name != 'MainThread' and 'pydev' not in thread.name:
+                res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread.ident, ctypes.py_object(SystemExit))
+                thread.join()
+
+        thread_list = threading.enumerate()
+        print(f"thread list after remove: {thread_list}")
+
+        PcapLogic.stop_pcap_bool = True
+        print(f"stopped feedback threads")
+        self.main_frame.message_label_middle.config(text="")
+
 
 def place_center(w1, width, height):  # Placing the window in the center of the screen
     reso = pg.size()
@@ -231,3 +249,4 @@ def place_center(w1, width, height):  # Placing the window in the center of the 
     width_str = str(width)
     height_str = str(height)
     w1.geometry(width_str + "x" + height_str + "+" + str(x) + "+" + str(y))
+
