@@ -216,6 +216,7 @@ class StartGUI(ttk.Frame):
                         scrolled_text.tag_add('found', check_btn, check_btn)
                         scrolled_text.see(check_btn)
                         check_btn.configure(style='Selected.TCheckbutton')
+                        check_btn.state(['selected'])
                     elif to_search in check_btn.cget("text"):
                         scrolled_text.tag_add('found', check_btn, check_btn)
                         scrolled_text.see(check_btn)
