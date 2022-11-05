@@ -78,6 +78,6 @@ class CreateMainFrame(ttk.Frame):
         tk.Label(self.top_frame, fg="#0061A1", image=self.image_smting).grid(row=0, column=0)
 
         self.load_pcap_btn.grid(row=0, column=0, padx=5, pady=5)
-        self.stop_decipher_btn.grid(row=0, column=1)
+        self.stop_decipher_btn.grid(row=0, column=1, padx=(0, 5))
         self.plots_radio.grid(row=1, column=0, padx=5, pady=5)
         self.settings_btn.grid(row=3, column=0, padx=5, pady=5)
