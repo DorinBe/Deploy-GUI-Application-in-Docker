@@ -65,7 +65,7 @@ class StartGUI(ttk.Frame):
             if thread.name != 'MainThread' and 'pydev' not in thread.name:
                 ctypes.pythonapi.PyThreadState_SetAsyncExc(thread.ident, ctypes.py_object(SystemExit))
                 thread.join()
-        PcapLogic.stop_pcap_bool = True
+        PcapLogic.stop_pcap_bool = True # Stop FeedbackWidget thread
         self.main_frame.message_label_middle.config(text="")
         print(f"thread list after remove: ", threading.enumerate())
         PcapLogic.stop_pcap_bool = False
@@ -73,6 +73,7 @@ class StartGUI(ttk.Frame):
     def open_file(self, extension, dest_port):
 
         def insert_to_gui_thread():
+            # check if pcap_bool turned on, is so, call select_plots
             self.after_idle(self.select_plots)
 
         def check_pcap(callback):
@@ -80,6 +81,7 @@ class StartGUI(ttk.Frame):
                 time.sleep(3)
             callback()
 
+        # stop previous load_pcap action
         self.stop_threads()
 
         self.selected.set(-1)
@@ -239,10 +241,16 @@ class StartGUI(ttk.Frame):
     def select_all(self):
         for btn in self.btns:
             btn.state(['selected'])
+            AppBoot.add_new_param_to_ini(btn.cget("text"), btn.cget("state"))
+        self.notebook_plots = self.notebook_plots.destroy()
+        self.notebook_plots = AppWidgets.MyNotebook(self.main_frame.right_frame)
 
     def deselect_all(self):
         for btn in self.btns:
             btn.state(['!selected'])
+            AppBoot.add_new_param_to_ini(btn.cget("text"), btn.cget("state"))
+        self.notebook_plots = self.notebook_plots.destroy()
+        self.notebook_plots = AppWidgets.MyNotebook(self.main_frame.right_frame)
 
     def update_select_plots(self, site_name, btn_state):
         AppBoot.add_new_param_to_ini(site_name, btn_state)

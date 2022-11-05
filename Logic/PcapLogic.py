@@ -31,7 +31,7 @@ class AsyncPcap2Bin(Thread):
         i=0
 
         for pkt in self.packets:
-            if i == 100:
+            if i == 100: #debug
                 break
             i+=1
             mystring = pkt.dns.qry_name.split('.')[1]

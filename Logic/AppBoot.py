@@ -39,7 +39,7 @@ def add_new_param_to_ini(site_name, state):
 
     val = sites_dict.get('sites')
 
-    if 'selected' in state:
+    if 'selected' in str(state) or 'normal' in str(state):
         if val == "":
             val += site_name
         else:
