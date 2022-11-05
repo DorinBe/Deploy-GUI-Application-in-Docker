@@ -85,6 +85,7 @@ class StartGUI(ttk.Frame):
         self.selected.set(-1)
         title = "Please choose " + extension + " file to work with"
         self.path = askopenfilename(filetypes=[("Custom Files:", extension)], title=title)
+        self.main_frame.path_label_middle.configure(text=self.path)
         if not self.path:
             print(f"Error opening file {self.path}")
             return
