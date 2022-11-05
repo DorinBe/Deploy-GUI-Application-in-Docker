@@ -168,28 +168,42 @@ class StartGUI(ttk.Frame):
         self.notebook_settings.add(frame, text='Sites')
         self.notebook_settings.counter += 1
 
-        self.insert_sites_names(frame)
-
-    def insert_sites_names(self, parent):
-        for child in parent.winfo_children():
-            child.destroy()
-
-        parent.grid_rowconfigure(0, weight=1)
-        parent.grid_rowconfigure(1, weight=30)
+        frame.grid_rowconfigure(0, weight=1)
+        frame.grid_rowconfigure(1, weight=30)
 
         pick_sites_text = "Choose sites to present on graph:"
-        pick_sites_label = ttk.Label(parent, style="Settings.TLabel", text=pick_sites_text, font = ("Helvetica", 12))
+        pick_sites_label = ttk.Label(frame, style="Settings.TLabel", text=pick_sites_text, font=("Helvetica", 12))
         pick_sites_label.grid(row=0, column=0, sticky="w")
 
-        scrolled_text = ScrolledText(parent, width=20, height=10, relief="flat")
-        scrolled_text.grid(row=1, column=0, sticky="nwse")
+        bottom_frame = ttk.Frame(frame, style='Custom.TFrame')
+        bottom_frame.grid(row=2, column=0, sticky="we")
+        bottom_frame.grid_columnconfigure(0, weight=1)
+        bottom_frame.grid_columnconfigure(1, weight=1)
+        bottom_frame.grid_columnconfigure(2, weight=1)
 
-        search_frame = ttk.Frame(parent, style='Custom.TFrame')
-        search_frame.grid(row=2, column=0)
-        search_label = ttk.Label(search_frame, style="Settings.TLabel", text='Search')
-        search_label.grid(row=0, column=1)
-        search_entry = Entry(search_frame)
-        search_entry.grid(row=1, column=1)
+        left_bottom_frame = ttk.Frame(bottom_frame, style='Custom.TFrame')
+        left_bottom_frame.grid(row=0, column=0, sticky="nswe")
+        left_bottom_frame.grid_rowconfigure(0, weight=1)
+        select_all_btn = ttk.Button(left_bottom_frame, style='Blue.TButton', text="select all",
+                                    command=self.select_all)
+        select_all_btn.grid(row=0, column=0)
+        deselect_all_btn = ttk.Button(left_bottom_frame, style='Blue.TButton', text="deselect all",
+                                      command=self.deselect_all)
+        deselect_all_btn.grid(row=0, column=1)
+
+        middle_bottom_frame = ttk.Frame(bottom_frame, style='Custom.TFrame')
+        middle_bottom_frame.grid(row=0, column=1, sticky="nswe")
+        middle_bottom_frame.grid_columnconfigure(0, weight=1)
+        search_label = ttk.Label(middle_bottom_frame, style="Settings.TLabel", text='Search')
+        search_label.grid(row=0, column=0)
+        search_entry = Entry(middle_bottom_frame)
+        search_entry.grid(row=1, column=0)
+
+        # for child in frame.winfo_children():
+        #     child.destroy()
+
+        scrolled_text = ScrolledText(frame, width=20, height=10, relief="flat")
+        scrolled_text.grid(row=1, column=0, sticky="nwse")
 
         sites = AppBoot.sites_dict.get('sites').split(':')
 
@@ -226,6 +240,14 @@ class StartGUI(ttk.Frame):
 
         search_entry.bind("<Return>", get)
         self.notebook_settings.update()
+
+    def select_all(self):
+        for btn in self.btns:
+            btn.state(['selected'])
+
+    def deselect_all(self):
+        for btn in self.btns:
+            btn.state(['!selected'])
 
     def update_select_plots(self, site_name, btn_state):
         AppBoot.add_new_param_to_ini(site_name, btn_state)
