@@ -5,21 +5,6 @@ from PIL import Image, ImageTk
 
 
 class CreateMainFrame(ttk.Frame):
-    """
-    |---------------------------|
-    |           Top Level       |
-    |---------------------------|
-    |----border--|--------------|
-    |----files---|              |
-    |            |     Right    |
-    |            |              |
-    |------------|              |
-    |----buttons-|              |
-    |            |              |
-    |            |              |
-    |------------|              |
-    |----/border-|--------------|
-    """
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -38,6 +23,7 @@ class CreateMainFrame(ttk.Frame):
 
         # buttons
         self.load_pcap_btn = ttk.Button(master=self.left_frame, text="Load Pcap", width=10, style='Blue.TButton')
+        self.stop_decipher_btn = ttk.Button(master=self.left_frame,width=3, style='Stop.TButton')
         self.plots_radio = ttk.Radiobutton(self.left_frame, text='Plots\t', width=10, style='Blue.TRadiobutton')
         self.settings_btn = ttk.Button(self.left_frame, text='Settings', width=10, style="Blue.TButton")
 
@@ -77,5 +63,6 @@ class CreateMainFrame(ttk.Frame):
         tk.Label(self.top_frame, fg="#0061A1", image=self.image_smting).grid(row=0, column=0)
 
         self.load_pcap_btn.grid(row=0, column=0, padx=5, pady=5)
+        self.stop_decipher_btn.grid(row=0, column=1)
         self.plots_radio.grid(row=1, column=0, padx=5, pady=5)
         self.settings_btn.grid(row=3, column=0, padx=5, pady=5)

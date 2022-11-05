@@ -52,6 +52,7 @@ class StartGUI(ttk.Frame):
         # set functionalities to buttons
         self.main_frame.load_pcap_btn.configure(
             command=lambda: self.open_file(".pcapng", self.ab.dest_port))
+        self.main_frame.stop_decipher_btn.configure(command=self.stop_threads)
         self.main_frame.plots_radio.configure(value=1, variable=self.selected, command=self.show_selected_size,
                                               state='disabled')
         self.main_frame.settings_btn.configure(command=self.settings_button, state='disabled')
