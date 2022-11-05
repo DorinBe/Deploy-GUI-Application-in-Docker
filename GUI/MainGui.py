@@ -141,8 +141,6 @@ class StartGUI(ttk.Frame):
                 y = remove.iloc[:1].values[0]
                 plt.barh((remove.columns.values[20 * i:20 * i + 20]), y[20 * i:20 * i + 20], color="#73B8FA",
                          edgecolor="#73B8FA")
-                # plt.xticks(np.arange(min(y[20 * i:20 * i + 20]), max(y[20 * i:20 * i + 20])+1, 1.0))
-                # plt.grid(color="#EDF6FF")
 
                 self.notebook_plots.counter += 1
 
@@ -198,9 +196,6 @@ class StartGUI(ttk.Frame):
         search_label.grid(row=0, column=0)
         search_entry = Entry(middle_bottom_frame)
         search_entry.grid(row=1, column=0)
-
-        # for child in frame.winfo_children():
-        #     child.destroy()
 
         scrolled_text = ScrolledText(frame, width=20, height=10, relief="flat")
         scrolled_text.grid(row=1, column=0, sticky="nwse")
