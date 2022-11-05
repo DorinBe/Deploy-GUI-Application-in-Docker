@@ -52,6 +52,7 @@ class StartGUI(ttk.Frame):
         # set functionalities to buttons
         self.main_frame.load_pcap_btn.configure(
             command=lambda: self.open_file(".pcapng", self.ab.dest_port))
+        self.main_frame.stop_decipher_btn.configure(command=self.stop_threads)
         self.main_frame.plots_radio.configure(value=1, variable=self.selected, command=self.show_selected_size,
                                               state='disabled')
         self.main_frame.settings_btn.configure(command=self.settings_button, state='disabled')
@@ -84,6 +85,7 @@ class StartGUI(ttk.Frame):
         self.selected.set(-1)
         title = "Please choose " + extension + " file to work with"
         self.path = askopenfilename(filetypes=[("Custom Files:", extension)], title=title)
+        self.main_frame.path_label_middle.configure(text=self.path)
         if not self.path:
             print(f"Error opening file {self.path}")
             return
@@ -139,8 +141,6 @@ class StartGUI(ttk.Frame):
                 y = remove.iloc[:1].values[0]
                 plt.barh((remove.columns.values[20 * i:20 * i + 20]), y[20 * i:20 * i + 20], color="#73B8FA",
                          edgecolor="#73B8FA")
-                # plt.xticks(np.arange(min(y[20 * i:20 * i + 20]), max(y[20 * i:20 * i + 20])+1, 1.0))
-                # plt.grid(color="#EDF6FF")
 
                 self.notebook_plots.counter += 1
 
@@ -166,21 +166,39 @@ class StartGUI(ttk.Frame):
         self.notebook_settings.add(frame, text='Sites')
         self.notebook_settings.counter += 1
 
-        self.insert_sites_names(frame)
+        frame.grid_rowconfigure(0, weight=1)
+        frame.grid_rowconfigure(1, weight=30)
 
-    def insert_sites_names(self, parent):
-        for child in parent.winfo_children():
-            child.destroy()
+        pick_sites_text = "Choose sites to present on graph:"
+        pick_sites_label = ttk.Label(frame, style="Settings.TLabel", text=pick_sites_text, font=("Helvetica", 12))
+        pick_sites_label.grid(row=0, column=0, sticky="w")
 
-        scrolled_text = ScrolledText(parent, width=20, height=10)
-        scrolled_text.grid(row=0, column=0, sticky="nwse")
+        bottom_frame = ttk.Frame(frame, style='Custom.TFrame')
+        bottom_frame.grid(row=2, column=0, sticky="we")
+        bottom_frame.grid_columnconfigure(0, weight=1)
+        bottom_frame.grid_columnconfigure(1, weight=1)
+        bottom_frame.grid_columnconfigure(2, weight=1)
 
-        search_frame = ttk.Frame(parent, style='Custom.TFrame')
-        search_frame.grid(row=0, column=1)
-        search_label = ttk.Label(search_frame, style="Settings.TLabel", text='Search')
-        search_label.grid(row=0, column=1)
-        search_entry = Entry(search_frame)
-        search_entry.grid(row=1, column=1)
+        left_bottom_frame = ttk.Frame(bottom_frame, style='Custom.TFrame')
+        left_bottom_frame.grid(row=0, column=0, sticky="nswe")
+        left_bottom_frame.grid_rowconfigure(0, weight=1)
+        select_all_btn = ttk.Button(left_bottom_frame, style='Blue.TButton', text="select all",
+                                    command=self.select_all)
+        select_all_btn.grid(row=0, column=0)
+        deselect_all_btn = ttk.Button(left_bottom_frame, style='Blue.TButton', text="deselect all",
+                                      command=self.deselect_all)
+        deselect_all_btn.grid(row=0, column=1)
+
+        middle_bottom_frame = ttk.Frame(bottom_frame, style='Custom.TFrame')
+        middle_bottom_frame.grid(row=0, column=1, sticky="nswe")
+        middle_bottom_frame.grid_columnconfigure(0, weight=1)
+        search_label = ttk.Label(middle_bottom_frame, style="Settings.TLabel", text='Search')
+        search_label.grid(row=0, column=0)
+        search_entry = Entry(middle_bottom_frame)
+        search_entry.grid(row=1, column=0)
+
+        scrolled_text = ScrolledText(frame, width=20, height=10, relief="flat")
+        scrolled_text.grid(row=1, column=0, sticky="nwse")
 
         sites = AppBoot.sites_dict.get('sites').split(':')
 
@@ -207,6 +225,7 @@ class StartGUI(ttk.Frame):
                         scrolled_text.tag_add('found', check_btn, check_btn)
                         scrolled_text.see(check_btn)
                         check_btn.configure(style='Selected.TCheckbutton')
+                        check_btn.state(['selected'])
                     elif to_search in check_btn.cget("text"):
                         scrolled_text.tag_add('found', check_btn, check_btn)
                         scrolled_text.see(check_btn)
@@ -216,6 +235,14 @@ class StartGUI(ttk.Frame):
 
         search_entry.bind("<Return>", get)
         self.notebook_settings.update()
+
+    def select_all(self):
+        for btn in self.btns:
+            btn.state(['selected'])
+
+    def deselect_all(self):
+        for btn in self.btns:
+            btn.state(['!selected'])
 
     def update_select_plots(self, site_name, btn_state):
         AppBoot.add_new_param_to_ini(site_name, btn_state)
