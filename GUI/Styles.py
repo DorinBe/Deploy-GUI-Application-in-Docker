@@ -16,7 +16,6 @@ class MyStyle:
         self.my_style.configure('Green.TButton', background="green", activebackground="green")
         self.my_style.configure('Stop.TButton', background="red", foreground="redc")
         self.my_style.configure('Settings.TLabel', background='white')
-        self.my_style.configure("Settings.TLabel", foreground="black", font=('Helvetica normal', 10), background="white")
         self.my_style.configure('Blue.TRadiobutton', indicatorforeground="#73B8FA")
         self.font_normal = ("Helvetica", 12)
 

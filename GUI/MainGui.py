@@ -174,11 +174,18 @@ class StartGUI(ttk.Frame):
         for child in parent.winfo_children():
             child.destroy()
 
-        scrolled_text = ScrolledText(parent, width=20, height=10)
-        scrolled_text.grid(row=0, column=0, sticky="nwse")
+        parent.grid_rowconfigure(0, weight=1)
+        parent.grid_rowconfigure(1, weight=30)
+
+        pick_sites_text = "Choose sites to present on graph:"
+        pick_sites_label = ttk.Label(parent, style="Settings.TLabel", text=pick_sites_text, font = ("Helvetica", 12))
+        pick_sites_label.grid(row=0, column=0, sticky="w")
+
+        scrolled_text = ScrolledText(parent, width=20, height=10, relief="flat")
+        scrolled_text.grid(row=1, column=0, sticky="nwse")
 
         search_frame = ttk.Frame(parent, style='Custom.TFrame')
-        search_frame.grid(row=0, column=1)
+        search_frame.grid(row=2, column=0)
         search_label = ttk.Label(search_frame, style="Settings.TLabel", text='Search')
         search_label.grid(row=0, column=1)
         search_entry = Entry(search_frame)
