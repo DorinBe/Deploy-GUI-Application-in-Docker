@@ -1,4 +1,4 @@
-from .ConfigParser import get_config
+from .ConfigParser import ConfigParser
 from Logic import Paths, Globals
 
 dest_port = ""
@@ -8,7 +8,7 @@ class AppBoot:
     def __init__(self, message_label):
         self.message_label = message_label
         self.dest_port = ""
-        self.config = get_config()
+        self.config = ConfigParser.get_config()
         self.config.read(Paths.ini)
         self.read_settings()
         self.read_plots()
