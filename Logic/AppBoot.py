@@ -1,17 +1,14 @@
-import configparser as cp
-
+from .ConfigParser import ConfigParser
 from Logic import Paths, Globals
 
 dest_port = ""
 sites_dict = {}
 
-
 class AppBoot:
     def __init__(self, message_label):
         self.message_label = message_label
         self.dest_port = ""
-        self.config = cp.ConfigParser()
-        self.config.optionxform = str
+        self.config = ConfigParser.get_config()
         self.config.read(Paths.ini)
         self.read_settings()
         self.read_plots()
@@ -32,8 +29,7 @@ class AppBoot:
 
 def add_new_param_to_ini(site_name, state):
     global sites_dict
-    config = cp.ConfigParser()
-    config.optionxform = str
+    config = ConfigParser.get_config()
     config.read(Paths.ini)
     cfgfile = open(Paths.ini, 'w')
 

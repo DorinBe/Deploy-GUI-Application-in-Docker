@@ -6,6 +6,7 @@ from tkinter import messagebox, ttk
 from tkinter.filedialog import askopenfilename
 from tkinter.scrolledtext import ScrolledText
 from tkinter.ttk import Entry
+from Logic.ConfigParser import ConfigParser
 
 import matplotlib.backends.backend_tkagg as tkagg
 import pyautogui as pg
@@ -257,6 +258,11 @@ class StartGUI(ttk.Frame):
         self.notebook_plots = self.notebook_plots.destroy()
         self.notebook_plots = AppWidgets.MyNotebook(self.main_frame.right_frame)
 
+    def save_settings(self):
+        # self.ab.dest_ip = self.ip_entry.get()
+        self.ab.dest_port = self.port_entry.get()
+        ConfigParser.change_settings("destination port", str(self.ab.dest_port))
+
     def create_settings_tab(self):
         self.notebook_settings.tabs.append(frame := tk.Frame(self.notebook_settings, bg='white'))  # tab[1]
         self.notebook_settings.add(frame, text='SETTINGS')
@@ -267,10 +273,13 @@ class StartGUI(ttk.Frame):
                                                                                             sticky="e")
         ttk.Label(frame, style='Settings.TLabel', text='Destination Port = ', font=font).grid(row=1, column=0,
                                                                                               sticky="e")
+        ttk.Button(frame, style='Blue.TButton', text='Save', command=self.save_settings).grid(row=2, column=0,
+                                                                                                sticky="e")
+        
         width = 100
-        port_entry = ttk.Entry(frame, width=width)
-        port_entry.grid(row=0, column=1)
-        port_entry.insert(0, self.ab.dest_port)
+        self.port_entry = ttk.Entry(frame, width=width)
+        self.port_entry.grid(row=0, column=1)
+        self.port_entry.insert(0, self.ab.dest_port)
 
 
 def place_center(w1, width, height):  # Placing the window in the center of the screen
