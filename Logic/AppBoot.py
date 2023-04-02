@@ -29,7 +29,7 @@ class AppBoot:
 
 def add_new_param_to_ini(site_name, state):
     global sites_dict
-    config = get_config()
+    config = ConfigParser.get_config()
     config.read(Paths.ini)
     cfgfile = open(Paths.ini, 'w')
 
