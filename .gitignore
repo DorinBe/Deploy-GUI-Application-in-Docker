@@ -1,3 +1,6 @@
 GUI/__pycache__/
 Logic/__pycache__/
 *.csv
+*.env
+*.pub
+*.Xauthority

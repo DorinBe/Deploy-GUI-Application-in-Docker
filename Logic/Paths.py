@@ -1,10 +1,6 @@
 import os
-binary_flag = False
-path = os.getcwd()
-deciphered_data = parsed_xml = ini = path
-deciphered_data += "\deciphered_data.csv"
-parsed_xml += r"\parsed_xml.csv"
-ini += "\Default.ini"
 
-# program paths
-bin_path = ""
+# adjust paths to linux
+deciphered_data = os.path.join(os.getcwd(), "deciphered_data.csv")
+parsed_xml = os.path.join(os.getcwd(), "parsed_xml.csv")
+ini = os.path.join(os.getcwd(), "Default.ini")
