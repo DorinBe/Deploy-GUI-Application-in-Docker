@@ -26,7 +26,6 @@ hence, the container needs to be provided with capability to have a monitor inte
 3. Throughtout my expedition I saw toturials that introduce the concept between X-Server and containers, but I didn't like some security gaps that were provided in those toturials. Hence I've learned about secrets, ssh-keygen and ssh (already had some exprence with it, but also achived to sshing from an Ubuntu\Windows to Windows from different networks which felt quite adventorous).
 4. RSA is most commonly used by now but it is recomended to use ecdh as rsa is repeteadly being under cracking for years.
 5. Pushing and pulling into and outof dockerhub.
-6. Deploying to GCP requires *.pub files to be excluded from .dockerfile so at the end I used a simpler and straight-foward way for creating a secure connection, I will be back to it later.
 
 ## Requierments[](#requierments)
 - Download and install Xming Server (X-Server) [Xming Server](https://sourceforge.net/projects/xming).
