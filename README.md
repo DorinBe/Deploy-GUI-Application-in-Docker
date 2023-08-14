@@ -71,7 +71,7 @@ hence, the container needs to be provided with capability to have a monitor inte
     			```docker run -it --rm -e "DISPLAY=$(ip_of_host_machine):0.0 dorincatladish123/pysurfs```
 			- ### Remote Display Outside Network[](#remote-display-outside-network)
 			- create an ssh connection between the host machine and client machine (you will need port fowarding)
-			- now you are controlling the host machine from the client machine, repeat all the steps in the mindset of a localhost.
+			- now you are controlling the host machine from the client machine, repeat all the steps in the mindset of [LocalHost Display](#localhost-display).
  
 - When should one favour .env files?
 	- They can store multiple enviroment variables and configurations.
