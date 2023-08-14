@@ -1,5 +1,27 @@
 # <img src="https://i.ibb.co/ZSbWvNw/icon.png" width="30px" height="30px" /> PySurfs
-Analyzes web surfs by Wireshark files
+A simple and fun program in Python, made to express knowledge in the usage of wireshark, python, ini files, tkinter and pandas.
+You provide it with a record of wireshark program of interent traffic and the port to listen on, and it provides you with an Hgraph of which webs were visited and in what frequecy.
+
+A year passed sice I've first uploaded this, and I decided that I want to try to dockerize it.
+why?
+I wanted to gain some knowledge and have hands-on practice in dockers.
+
+Things quickly escalated (which is typical in SWE) as Gui applications are not the best systems to deploy on dockers.
+i've spent some time learning new subjects programs and libraries that in the end achieved the result
+IVE DEPLOYED A DOCKER BY MY SELF, FIRST APPLICATION
+
+some things i've learned:
+1. containers are headless and don't really have a monitor which is very contradicting all the GUI thing (laughting emoji).
+hence, the container needs to be provided with capability to have a monitor interface. This capability is provided by X Servers. 
+2. The architecutre of X Servers is very simple server-client like framework where the X Server reciecves signals from the clients' keyboard and mouse, and than sends the signals via network to a remote monitor.
+3. throughtout my expedition I saw toturials that introduce the concept between X-Server and containers, but I didn't like some security gaps that were provided in those toturials. hence ive learned about secrets, ssh (already had some exprence with it, but also achived to sshing from an Ubuntu to Windows which was quite adventorous and had difficulties. ssh-keygen which was favoured because it didnt envolve secrets or other mechanisms that provide difficulties to non-devops engineers trying to run the application.
+4. rsa is most commonly used by now but it is recomended to use ecdh as rsa is repeteadly being under cracking for years.
+
+
+
+## Requierments
+1. a file supported by 'pyshark' library
+
 
 1. Open Default.ini file and insert the correct 'destination port' under [SETTINGS] section. 
 2. Open the application, click "load pcap" and choose .pcap file to decipher.

@@ -18,9 +18,9 @@ ENV DEBIAN_FRONTEND=dialog
 # -y allow automatic yes for prompts
 RUN apt-get install -y libx11-6 libxext-dev libxrender-dev libxinerama-dev libxi-dev libxrandr-dev libxcursor-dev libxtst-dev tk-dev && rm -rf /var/lib/apt/lists/*       
 
-# Install ssh to interact with X-Server
-RUN apt-get update && apt-get install -y openssh-server
-EXPOSE 22
+# # Install ssh to interact with X-Server
+# RUN apt-get update && apt-get install -y openssh-server
+# EXPOSE 22
 
 # Add describtion to image
 LABEL describtion="playing with dockers"
