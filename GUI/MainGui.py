@@ -9,7 +9,7 @@ from tkinter.ttk import Entry
 from Logic.ConfigParser import ConfigParser
 
 import matplotlib.backends.backend_tkagg as tkagg
-import pyautogui as pg
+from pyautogui import size
 from matplotlib import pyplot as plt
 
 from GUI import AppWidgets, FeedbackWidgets, MainFrame
@@ -19,6 +19,7 @@ from Logic import AppBoot, PcapLogic
 
 import ctypes
 import threading
+import os # for running code perfectly on windows and on os
 
 MAX_X, MAX_Y = 1300, 800
 
@@ -32,7 +33,10 @@ class StartGUI(ttk.Frame):
         self.window = parent
         MyStyle()
         self.window.title(f"PySurfs")  # title of the GUI window
-        self.window.iconbitmap("icon2.ico")
+        # the .ico extension is not supported on linux
+        # self.window.iconbitmap("icon2.ico")
+        # icon=tk.PhotoImage(file="logo2.png")
+        # self.window.iconphoto(False, icon)
         place_center(self.window, width=MAX_X, height=MAX_Y)
 
         self.path = ""
@@ -283,7 +287,7 @@ class StartGUI(ttk.Frame):
 
 
 def place_center(w1, width, height):  # Placing the window in the center of the screen
-    reso = pg.size()
+    reso = size()
     rx = reso[0]
     ry = reso[1]
     x = int((rx / 2) - (MAX_X / 2))
