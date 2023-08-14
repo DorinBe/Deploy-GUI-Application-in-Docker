@@ -10,7 +10,8 @@ I wanted to gain some knowledge and have hands-on practice with dockers.
 ## Table Of Contents
 - [Things I've Learned](#things-ive-learned)
 - [Requierments](#requierments)
-- How To Use
+- [Deploy](#depgui)
+- anotherone
 
 Things quickly escalated (which is typical in SWE) as GUI applications are not the best systems to deploy on dockers.<br>
 I've spent some time learning new subjects programs and libraries that in the end achieved the result.
@@ -26,11 +27,13 @@ hence, the container needs to be provided with capability to have a monitor inte
 6. Deploying to GCP requires *.pub files to be excluded from .dockerfile so at the end I used a simpler and straight-foward way for creating a secure connection, I will be back to it later.
 
 ## Requierments[](#requierments)
-- Download and install docker [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- Download and install Xming Server (X-Server) [Xming Server](https://sourceforge.net/projects/xming/) 
+- Download and install docker [Docker Desktop](https://www.docker.com/products/docker-desktop).
+- Download and install Xming Server (X-Server) [Xming Server](https://sourceforge.net/projects/xming).
 
+## Deploy[](#depgui)
+-bla
+-bla
 
-## Instalattion and Usage
 ### Install Docker
 , then open a cmd and write "docker pull dorincatladish123/pysurfs.
 #### The DISPLAY Error
