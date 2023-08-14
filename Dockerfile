@@ -1,42 +1,34 @@
-# Use Python as parent image, this is actually an image containing linux based python code
+# Use Python as parent image, this is actually an image containing linux based python code 
+# so I've adjusted the GUI I wrote in windows OS to work also on Linux OS.
 FROM python:3.10.11
 
-RUN apt-get update -y
-RUN apt-get upgrade -y
-
-# disable option to ask for user input
+# Disable option to ask for input from user
 ENV DEBIAN_FRONTEND=noninteractive
 
-# for analyzing wireshark files
-RUN apt-get update && \
-    apt-get install -y tshark
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y tshark \ 
+    # X-Server libraries
+    libx11-6 libxext-dev libxrender-dev libxinerama-dev libxi-dev libxrandr-dev libxcursor-dev libxtst-dev tk-dev && rm -rf /var/lib/apt/lists/*
 
 # enable option to get input from user
-ENV DEBIAN_FRONTEND=dialog
-
-# Install X-Server to make container think it has graphical interface
-# -y allow automatic yes for prompts
-RUN apt-get install -y libx11-6 libxext-dev libxrender-dev libxinerama-dev libxi-dev libxrandr-dev libxcursor-dev libxtst-dev tk-dev && rm -rf /var/lib/apt/lists/*       
-
-# # Install ssh to interact with X-Server
-# RUN apt-get update && apt-get install -y openssh-server
-# EXPOSE 22
-
-# Add describtion to image
-LABEL describtion="playing with dockers"
-
-# CMD ["/usr/sbin/sshd", "-D"]
+ENV DEBIAN_FRONTEND=dialog      
 
 # Set the working directory in the container to /app
 WORKDIR /app
 COPY . /app
 RUN pip install -r requirements.txt
 
-RUN sh -c 'echo "X11Forwarding yes" >> /etc/ssh/sshd_config'
-RUN sh -c 'echo "X11UseLocalhost no" >> /etc/ssh/sshd_config'
-RUN mkdir /app/.ssh && ssh-keygen -f "/app/.ssh/id_rsa" -t rsa -b 4096 -N ""
-RUN mkdir /app/.ssh/authorized_keys
-COPY id_rsa.pub /app/.ssh/authorized_keys
+# Update SSH configuration for X11 forwarding
+# Only necessary when using SSH.
+RUN echo "X11Forwarding yes" >> /etc/ssh/sshd_config && \ 
+    echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
+
+# These commands need more research when using GCP
+# RUN mkdir /app/.ssh && ssh-keygen -f "/app/.ssh/id_rsa" -t rsa -b 4096 -N ""
+# RUN mkdir /app/.ssh/authorized_keys
+# COPY id_rsa.pub /app/.ssh/authorized_keys
 
 # Run main.py when the container launches
+# touch the .Xauthority manually to resolve error.
 CMD /bin/bash -c "touch /root/.Xauthority && python main.py"
