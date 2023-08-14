@@ -24,11 +24,6 @@ RUN pip install -r requirements.txt
 RUN echo "X11Forwarding yes" >> /etc/ssh/sshd_config && \ 
     echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
 
-# These commands need more research when using GCP
-# RUN mkdir /app/.ssh && ssh-keygen -f "/app/.ssh/id_rsa" -t rsa -b 4096 -N ""
-# RUN mkdir /app/.ssh/authorized_keys
-# COPY id_rsa.pub /app/.ssh/authorized_keys
-
 # Run main.py when the container launches
 # touch the .Xauthority manually to resolve error.
 CMD /bin/bash -c "touch /root/.Xauthority && python main.py"
