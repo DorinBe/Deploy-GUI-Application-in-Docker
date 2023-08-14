@@ -7,15 +7,14 @@ A year passed sice I've first uploaded this, and I decided that I want to try to
 <br>why?<br>
 I wanted to gain some knowledge and have hands-on practice with dockers.
 
-## Table Of Contents
-- [Things I've Learned](#things-ive-learned)
-- [Requierments](#requierments)
-- [Deploy](#depgui)
-- anotherone
-
 Things quickly escalated (which is typical in SWE) as GUI applications are not the best systems to deploy on dockers.<br>
 I've spent some time learning new subjects programs and libraries that in the end achieved the result.
 IVE DEPLOYED A DOCKER BY MY SELF
+
+## Table Of Contents
+- [Things I've Learned](#things-ive-learned)
+- [Requierments](#requierments)
+- [Deploy GUI Docker](#deploy-gui)
 
 ## Things I've Learned[](#things-ive-learned)
 1. Containers are headless and don't have a monitor to display the GUI, which is very contradicting to the GUI thing (laughting emoji), but can be usefull for testing.
@@ -30,13 +29,12 @@ hence, the container needs to be provided with capability to have a monitor inte
 - Download and install docker [Docker Desktop](https://www.docker.com/products/docker-desktop).
 - Download and install Xming Server (X-Server) [Xming Server](https://sourceforge.net/projects/xming).
 
-## Deploy[](#depgui)
--bla
--bla
+## Deploy GUI to Docker[](#deploy-gui)
+- hello
+- world
+- then open a cmd and write "docker pull dorincatladish123/pysurfs.
 
-### Install Docker
-, then open a cmd and write "docker pull dorincatladish123/pysurfs.
-#### The DISPLAY Error
+## The DISPLAY Error
 Now if you will try to run the container with "docker run dorincatladish123/pysurfs" an error will occur:
     ```
     Traceback (most recent call last):
