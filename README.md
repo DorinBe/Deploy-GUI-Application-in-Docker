@@ -72,6 +72,11 @@ hence, the container needs to be provided with capability to have a monitor inte
 			- ### Remote Display Outside Network[](#remote-display-outside-network)
 			- create an ssh connection between the host machine and client machine (you will need port fowarding)
 			- now you are controlling the host machine from the client machine, repeat all the steps in the mindset of a localhost.
+ 
+- When should one favour .env files?
+	- They can store multiple enviroment variables and configurations.
+   	- You can comment out the ev that are not necessary, but keep them in the file.
+
 
 #### The GUI[](#the-gui)
 1. Open Default.ini file and insert the correct 'destination port' under [SETTINGS] section. 
