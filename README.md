@@ -17,6 +17,7 @@ IVE DEPLOYED A GUI APP TO DOCKER
  	- [LocalHost Display](#localhost-display)
  	- [Remote Display Within Network](#remote-display-within-network)
   	- [Remote Display Outside Network](#remote-display-outside-network)
+- [No such file or directory Xauthority Error](#no-such-file-or-directory-xauthority-error)
 - [The GUI](#the-gui)
 
 ## Things I've Learned[](#things-ive-learned)
@@ -71,12 +72,39 @@ hence, the container needs to be provided with capability to have a monitor inte
 			- ### Remote Display Outside Network[](#remote-display-outside-network)
 			- create an ssh connection between the host machine and client machine (you will need port fowarding)
 			- now you are controlling the host machine from the client machine, repeat all the steps in the mindset of [LocalHost Display](#localhost-display).
- 
+
+---
+### No such file or directory Xauthority Error[](#no-such-file-or-directory-xauthority-error)
+Another common error when using Xauthority is that traceback. It won't happen to you with the Dockerfile that I provided because I planted an .Xauthority directory: <br>
+```# CMD /bin/bash -c "touch /root/.Xauthority && python main.py"```
+```
+Traceback (most recent call last):
+  File "/app/main.py", line 3, in <module>
+    from GUI import MainGui
+  File "/app/GUI/MainGui.py", line 12, in <module>
+    from pyautogui import size
+  File "/usr/local/lib/python3.10/site-packages/pyautogui/__init__.py", line 249, in <module>
+    import mouseinfo
+  File "/usr/local/lib/python3.10/site-packages/mouseinfo/__init__.py", line 223, in <module>
+    _display = Display(os.environ['DISPLAY'])
+  File "/usr/local/lib/python3.10/site-packages/Xlib/display.py", line 80, in __init__
+    self.display = _BaseDisplay(display)
+  File "/usr/local/lib/python3.10/site-packages/Xlib/display.py", line 62, in __init__
+    display.Display.__init__(*(self, ) + args, **keys)
+  File "/usr/local/lib/python3.10/site-packages/Xlib/protocol/display.py", line 60, in __init__
+    auth_name, auth_data = connect.get_auth(self.socket,
+  File "/usr/local/lib/python3.10/site-packages/Xlib/support/connect.py", line 91, in get_auth
+    return mod.get_auth(sock, dname, host, dno)
+  File "/usr/local/lib/python3.10/site-packages/Xlib/support/unix_connect.py", line 103, in new_get_auth
+    au = xauth.Xauthority()
+  File "/usr/local/lib/python3.10/site-packages/Xlib/xauth.py", line 45, in __init__
+    raise error.XauthError('~/.Xauthority: %s' % err)
+Xlib.error.XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/root/.Xauthority'
+```
 - When should one favour .env files?
 	- They can store multiple enviroment variables and configurations.
    	- You can comment out the ev that are not necessary, but keep them in the file.
-
-
+---
 #### The GUI[](#the-gui)
 1. Open Default.ini file and insert the correct 'destination port' under [SETTINGS] section. 
 2. Open the application, click "load pcap" and choose .pcap file to decipher.
