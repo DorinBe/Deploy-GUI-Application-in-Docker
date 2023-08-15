@@ -3,9 +3,9 @@
 A simple and fun program in Python, made to express knowledge in the usage of wireshark, python, ini files, tkinter, pandas and ssh.
 You provide it with a record of wireshark program of interent traffic and the port to listen on, and it provides you with an Hgraph of which webs were visited and in what frequecy.
 ### A year passed sice I've first uploaded this GUI app, and I decided that I want to try to dockerize it.
-But things quickly escalated (which is typical in SWE), so I decided to write this tutorial about how to deploy GUI applications to docker.<br>
 why?<br>
 I wanted to gain some knowledge and have hands-on practice with dockers.
+But things quickly escalated (which is typical in SWE), so I decided to write this tutorial about how to deploy GUI applications to docker.<br>
 I've spent some time learning new subjects, programs and libraries that in the end achieved the result. <br>
 IVE DEPLOYED A GUI APP TO DOCKER
 
