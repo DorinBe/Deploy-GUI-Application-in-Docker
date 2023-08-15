@@ -5,6 +5,8 @@ FROM python:3.10.11
 # Disable option to ask for input from user
 ENV DEBIAN_FRONTEND=noninteractive
 
+LABEL check if it is needed to keep the .Xauthority directory in the repository.
+
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y tshark \ 
@@ -20,10 +22,11 @@ COPY . /app
 RUN pip install -r requirements.txt
 
 # Update SSH configuration for X11 forwarding
-# Only necessary when using SSH.
+# Only necessary when using SSH for displays which are outside of your network.
 RUN echo "X11Forwarding yes" >> /etc/ssh/sshd_config && \ 
     echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
 
 # Run main.py when the container launches
 # touch the .Xauthority manually to resolve error.
+# CMD /bin/bash -c "touch /root/.Xauthority && python main.py"
 CMD /bin/bash -c "touch /root/.Xauthority && python main.py"
