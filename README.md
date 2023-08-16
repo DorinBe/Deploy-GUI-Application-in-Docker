@@ -18,7 +18,6 @@ IVE DEPLOYED A GUI APP TO DOCKER
 	 	- [Remote Display Within Network](#remote-display-within-network)
 	  	- [Remote Display Outside Network](#remote-display-outside-network)
   	- [No such file or directory 'Xauthority' Error](#no-such-file-or-directory-xauthority-error)
-- [No such file or directory Xauthority Error](#no-such-file-or-directory-xauthority-error)
 - [The GUI](#the-gui)
 
 ## Things I've Learned[](#things-ive-learned)
