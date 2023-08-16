@@ -14,9 +14,10 @@ IVE DEPLOYED A GUI APP TO DOCKER
 - [Requierments](#requierments)
 - [Deploy GUI App to Docker](#deploy-gui-app-to-docker)
 	- [The KeyError: 'DISPLAY' Error](#the-keyerror-display-error)
- 	- [LocalHost Display](#localhost-display)
- 	- [Remote Display Within Network](#remote-display-within-network)
-  	- [Remote Display Outside Network](#remote-display-outside-network)
+	 	- [LocalHost Display](#localhost-display)
+	 	- [Remote Display Within Network](#remote-display-within-network)
+	  	- [Remote Display Outside Network](#remote-display-outside-network)
+  	- [No such file or directory 'Xauthority' Error](#no-such-file-or-directory-xauthority-error)
 - [No such file or directory Xauthority Error](#no-such-file-or-directory-xauthority-error)
 - [The GUI](#the-gui)
 
@@ -36,8 +37,8 @@ hence, the container needs to be provided with capability to have a monitor inte
   ```docker pull dorincatladish123/pysurfs```
 
 ## Deploy GUI APP to Docker[](#deploy-gui-app-to-docker)
-- try to run the application with ```docker run --rm -it dorincatladish123/pysurfs```
-- ##### The KeyError DISPLAY Error[](#the-keyerror:-'display'-error)
+   try to run the application with ```docker run --rm -it dorincatladish123/pysurfs```
+- #### The KeyError DISPLAY Error[](#the-keyerror:-'display'-error)
   after running the command above, you will encounter the KeyError: 'DISPLAY'
     ```
     Traceback (most recent call last):
@@ -53,58 +54,48 @@ hence, the container needs to be provided with capability to have a monitor inte
         raise KeyError(key) from None
     KeyError: 'DISPLAY'
     ```
-   This is where the "containers are headless" comes into consideration. The container doesn't have any display ("screen") to display the GUI. <br> But we will work it on:
-- Last Step, brace yourself (:
-	- Where is the display (screen) in relation to the network?
-		- [LocalHost Display](#localhost-display)
-		- [Remote Display Within Network](#remote-display-within-network)
-		- [Remote Display Outside Network](#remote-display-outside-network)
-			- ### LocalHost Display[](#localhost-display)
-     			You can simply run your application without configuring anything. Xming configurations already accept localhost connections because there is no security risk. Just type into the command line:
-				```docker run -it --rm -e "DISPLAY=host.docker.internal:0.0" dorincatladish123/pysurfs```
-			- ### Remote Display Within Network[](#remote-display-within-network)
-				first lets establish a common language: <br>
-				host machine - is the machine where the necessary display (screen) is. <br>
-				client machine - the machine from which you will be running the GUI application. <br>
-			- client machine: open a command line from the client and type 'ipconfig', find the IPV4 (something like 192.168.0.1 or 10.0.0.x), (use the Wireless LAN adapter Wi-Fi if you are connected to wifi, etc..)
-			- host machine: navigate to Xming directory, the path is usually "C:\Program Files (x86)\Xming" and open *.hosts file, enter the IPV4 of the client machine to that file.)
-			- now restart Xming. It is important to close it from the icon tray and than open it, otherwise, the changes in the .hosts file will not be applied and it will not work. <br>
-    			```docker run -it --rm -e "DISPLAY=$(ip_of_host_machine):0.0 dorincatladish123/pysurfs```
-			- ### Remote Display Outside Network[](#remote-display-outside-network)
-			- create an ssh connection between the host machine and client machine (you will need port fowarding)
-			- now you are controlling the host machine from the client machine, repeat all the steps in the mindset of [LocalHost Display](#localhost-display).
+   	This is where the "containers are headless" comes into consideration. The container doesn't have any display ("screen") to display the GUI. <br> But we will work it on: <br>
+    
+  	Where is the display (screen) in relation to the network?
+  ---
+	- ### LocalHost Display[](#localhost-display)
+		You can simply run your application without configuring anything. Xming configurations already accept localhost connections because there is no security risk. Just type into the command line: <br>
+		```docker run -it --rm -e "DISPLAY=host.docker.internal:0.0" dorincatladish123/pysurfs```
+	- ### Remote Display Within Network[](#remote-display-within-network)
+		first lets establish a common language: <br>
+		host machine - is the machine where the necessary display (screen) is. <br>
+		client machine - the machine from which you will be running the GUI application. <br>
+		- client machine: open a command line from the client and type 'ipconfig', find the IPV4 (something like 192.168.0.1 or 10.0.0.x), (use the Wireless LAN adapter Wi-Fi if you are connected to wifi, etc..)
+		- host machine: navigate to Xming directory, the path is usually "C:\Program Files (x86)\Xming" and open *.hosts file, enter the IPV4 of the client machine to that file.)
+		- now restart Xming. It is important to close it from the icon tray and than open it, otherwise, the changes in the .hosts file will not be applied and it will not work. <br>
+		```docker run -it --rm -e "DISPLAY=$(ip_of_host_machine):0.0 dorincatladish123/pysurfs```
+	- ### Remote Display Outside Network[](#remote-display-outside-network)
+		- create an ssh connection between the host machine and client machine (you will need port fowarding)
+		- now you are controlling the host machine from the client machine, repeat all the steps in the mindset of [LocalHost Display](#localhost-display).
 
 ---
-### No such file or directory Xauthority Error[](#no-such-file-or-directory-xauthority-error)
-Another common error when using Xauthority is that traceback. It won't happen to you with the Dockerfile that I provided because I planted an .Xauthority directory: <br>
-```# CMD /bin/bash -c "touch /root/.Xauthority && python main.py"```
-```
-Traceback (most recent call last):
-  File "/app/main.py", line 3, in <module>
-    from GUI import MainGui
-  File "/app/GUI/MainGui.py", line 12, in <module>
-    from pyautogui import size
-  File "/usr/local/lib/python3.10/site-packages/pyautogui/__init__.py", line 249, in <module>
-    import mouseinfo
-  File "/usr/local/lib/python3.10/site-packages/mouseinfo/__init__.py", line 223, in <module>
-    _display = Display(os.environ['DISPLAY'])
-  File "/usr/local/lib/python3.10/site-packages/Xlib/display.py", line 80, in __init__
-    self.display = _BaseDisplay(display)
-  File "/usr/local/lib/python3.10/site-packages/Xlib/display.py", line 62, in __init__
-    display.Display.__init__(*(self, ) + args, **keys)
-  File "/usr/local/lib/python3.10/site-packages/Xlib/protocol/display.py", line 60, in __init__
-    auth_name, auth_data = connect.get_auth(self.socket,
-  File "/usr/local/lib/python3.10/site-packages/Xlib/support/connect.py", line 91, in get_auth
-    return mod.get_auth(sock, dname, host, dno)
-  File "/usr/local/lib/python3.10/site-packages/Xlib/support/unix_connect.py", line 103, in new_get_auth
-    au = xauth.Xauthority()
-  File "/usr/local/lib/python3.10/site-packages/Xlib/xauth.py", line 45, in __init__
-    raise error.XauthError('~/.Xauthority: %s' % err)
-Xlib.error.XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/root/.Xauthority'
-```
-- When should one favour .env files?
-	- They can store multiple enviroment variables and configurations.
-   	- You can comment out the ev that are not necessary, but keep them in the file.
+- #### No such file or directory '.Xauthority' Error[](#no-such-file-or-directory-.xauthority-error)
+	Another common error when using Xauthority is that traceback.
+	```
+	Traceback (most recent call last):
+	  File "/app/main.py", line 3, in <module>
+	    from GUI import MainGui
+	  File "/app/GUI/MainGui.py", line 12, in <module>
+	    from pyautogui import size
+	  File "/usr/local/lib/python3.10/site-packages/pyautogui/__init__.py", line 249, in <module>
+	    import mouseinfo
+	  File "/usr/local/lib/python3.10/site-packages/mouseinfo/__init__.py", line 223, in <module>
+	    _display = Display(os.environ['DISPLAY'])
+	  ...
+	  File "/usr/local/lib/python3.10/site-packages/Xlib/support/unix_connect.py", line 103, in new_get_auth
+	    au = xauth.Xauthority()
+	  File "/usr/local/lib/python3.10/site-packages/Xlib/xauth.py", line 45, in __init__
+	    raise error.XauthError('~/.Xauthority: %s' % err)
+	Xlib.error.XauthError: ~/.Xauthority: [Errno 2] No such file or directory: '/root/.Xauthority'
+	```
+ 	 It won't happen to you with the Dockerfile that I provided because I planted an .Xauthority directory with these lines: <br>
+   	```# CMD /bin/bash -c "touch /root/.Xauthority && python main.py"```
+
 ---
 #### The GUI[](#the-gui)
 1. Open Default.ini file and insert the correct 'destination port' under [SETTINGS] section. 
