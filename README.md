@@ -5,14 +5,14 @@ You provide it with a record of wireshark program of internet traffic and the po
 ### A year passed since I've first uploaded this GUI app, and I decided that I want to try to dockerize it.
 why?<br>
 I wanted to gain some knowledge and have hands-on practice with Docker.
-But things quickly escalated (which is typical in SWE), so I decided to write this tutorial about how to deploy GUI applications to docker.<br>
+But things quickly escalated (which is typical in Software Engineering), so I decided to write this tutorial about how to deploy GUI applications to docker.<br>
 I've spent some time learning new subjects, programs and libraries that in the end achieved the result. <br>
 I'VE DEPLOYED A GUI APP TO DOCKER
 
-## Table Of Contents
+## Table of Contents
 - [Things I've Learned](#things-ive-learned)
-- [Requirments](#requierments)
-- [Deploy GUI App to Docker](#deploy-gui-app-to-docker)
+- [Requirements](#requirements)
+- [Deploy a GUI Application to Docker](#deploy-a-gui-application-to-docker)
 	- [The KeyError: 'DISPLAY' Error](#the-keyerror-display-error)
 	 	- [LocalHost Display](#localhost-display)
 	 	- [Remote Display Within Network](#remote-display-within-network)
@@ -21,21 +21,21 @@ I'VE DEPLOYED A GUI APP TO DOCKER
 - [The GUI](#the-gui)
 
 ## Things I've Learned[](#things-ive-learned)
-1. Containers are headless and don't have a monitor to display the GUI, which is very contradicting to the GUI thing "(laughing emoji)", but can be usefull for testing.
+1. Containers are headless and don't have a monitor to display the GUI, which is very contradictory to the GUI thing "(laughing emoji)", but can be useful for testing.
 hence, the container needs to be provided with capability to have a monitor interface. This capability is provided by X Servers. 
-2. The architecutre of X Servers is very simple server-client like framework where the X Server receicves signals from the clients' keyboard and mouse, and then sends the signals via network to a remote monitor.
-3. Throughout my expedition I saw tutorials that introduce the concept between X-Server and containers, but I didn't like some security gaps that were provided in those tutorials. Hence I've learned about secrets, ssh-keygen and ssh (already had some experience with it, but also achieved to sshing from an Ubuntu\Windows to Windows from different networks which felt quite adventorous).
-4. RSA is most commonly used by now but it is recommended to use ecdh as rsa is repeatedly being under cracking for years.
+2. The architecture of X Servers is very simple server-client like framework where the X Server receives signals from the clients' keyboard and mouse, and then sends the signals via network to a remote monitor.
+3. Throughout my expedition I saw tutorials that introduce the concept between X-Server and containers, but I didn't like some security gaps that were provided in those tutorials. Hence I've learned about secrets, ssh-keygen and ssh (already had some experience with it, but also achieved to sshing from an Ubuntu\Windows to Windows from different networks which felt quite adventurous).
+4. RSA is most commonly used by now but it is recommended to use ECDH as RSA is repeatedly being under cracking for years.
 5. Pushing and pulling into and out of dockerhub.
 6. In WSL the .Xauthority already exists and it simplifies the process (:
 
-## Requierments[](#requierments)
+## Requirements[](#requierments)
 - Download and install Xming Server (X-Server) [Xming Server](https://sourceforge.net/projects/xming).
 - Download and install docker [Docker Desktop](https://www.docker.com/products/docker-desktop).
 - You'll need some gui application to test this tutorial, I am not bribed but you can use this one:
   ```docker pull dorincatladish123/pysurfs```
 
-## Deploy GUI APP to Docker[](#deploy-gui-app-to-docker)
+## Deploy a GUI Application to Docker[](#deploy-a-gui-application-to-docker)
    try to run the application with ```docker run --rm -it dorincatladish123/pysurfs```
 - #### The KeyError DISPLAY Error[](#the-keyerror:-'display'-error)
   after running the command above, you will encounter the KeyError: 'DISPLAY'
