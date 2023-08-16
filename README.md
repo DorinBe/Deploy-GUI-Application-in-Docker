@@ -1,17 +1,17 @@
 
 # <img src="https://i.ibb.co/ZSbWvNw/icon.png" width="30px" height="30px" /> PySurfs
 A simple and fun program in Python, made to express knowledge in the usage of wireshark, python, ini files, tkinter, pandas and ssh.
-You provide it with a record of wireshark program of interent traffic and the port to listen on, and it provides you with an Hgraph of which webs were visited and in what frequecy.
-### A year passed sice I've first uploaded this GUI app, and I decided that I want to try to dockerize it.
+You provide it with a record of wireshark program of internet traffic and the port to listen on, and it provides you with an H-Bar-Graph of which websites were visited and in what frequency.
+### A year passed since I've first uploaded this GUI app, and I decided that I want to try to dockerize it.
 why?<br>
-I wanted to gain some knowledge and have hands-on practice with dockers.
+I wanted to gain some knowledge and have hands-on practice with Docker.
 But things quickly escalated (which is typical in SWE), so I decided to write this tutorial about how to deploy GUI applications to docker.<br>
 I've spent some time learning new subjects, programs and libraries that in the end achieved the result. <br>
-IVE DEPLOYED A GUI APP TO DOCKER
+I'VE DEPLOYED A GUI APP TO DOCKER
 
 ## Table Of Contents
 - [Things I've Learned](#things-ive-learned)
-- [Requierments](#requierments)
+- [Requirments](#requierments)
 - [Deploy GUI App to Docker](#deploy-gui-app-to-docker)
 	- [The KeyError: 'DISPLAY' Error](#the-keyerror-display-error)
 	 	- [LocalHost Display](#localhost-display)
@@ -21,13 +21,13 @@ IVE DEPLOYED A GUI APP TO DOCKER
 - [The GUI](#the-gui)
 
 ## Things I've Learned[](#things-ive-learned)
-1. Containers are headless and don't have a monitor to display the GUI, which is very contradicting to the GUI thing (laughting emoji), but can be usefull for testing.
+1. Containers are headless and don't have a monitor to display the GUI, which is very contradicting to the GUI thing "(laughing emoji)", but can be usefull for testing.
 hence, the container needs to be provided with capability to have a monitor interface. This capability is provided by X Servers. 
-2. The architecutre of X Servers is very simple server-client like framework where the X Server reciecves signals from the clients' keyboard and mouse, and than sends the signals via network to a remote monitor.
-3. Throughtout my expedition I saw toturials that introduce the concept between X-Server and containers, but I didn't like some security gaps that were provided in those toturials. Hence I've learned about secrets, ssh-keygen and ssh (already had some exprence with it, but also achived to sshing from an Ubuntu\Windows to Windows from different networks which felt quite adventorous).
-4. RSA is most commonly used by now but it is recomended to use ecdh as rsa is repeteadly being under cracking for years.
-5. Pushing and pulling into and outof dockerhub.
-6. In WSL the .Xauthority already exists an it simplifies the process (:
+2. The architecutre of X Servers is very simple server-client like framework where the X Server receicves signals from the clients' keyboard and mouse, and then sends the signals via network to a remote monitor.
+3. Throughout my expedition I saw tutorials that introduce the concept between X-Server and containers, but I didn't like some security gaps that were provided in those tutorials. Hence I've learned about secrets, ssh-keygen and ssh (already had some experience with it, but also achieved to sshing from an Ubuntu\Windows to Windows from different networks which felt quite adventorous).
+4. RSA is most commonly used by now but it is recommended to use ecdh as rsa is repeatedly being under cracking for years.
+5. Pushing and pulling into and out of dockerhub.
+6. In WSL the .Xauthority already exists and it simplifies the process (:
 
 ## Requierments[](#requierments)
 - Download and install Xming Server (X-Server) [Xming Server](https://sourceforge.net/projects/xming).
@@ -66,7 +66,7 @@ hence, the container needs to be provided with capability to have a monitor inte
 		client machine - the machine from which you will be running the GUI application. <br>
 		- client machine: open a command line from the client and type 'ipconfig', find the IPV4 (something like 192.168.0.1 or 10.0.0.x), (use the Wireless LAN adapter Wi-Fi if you are connected to wifi, etc..)
 		- host machine: navigate to Xming directory, the path is usually "C:\Program Files (x86)\Xming" and open *.hosts file, enter the IPV4 of the client machine to that file.)
-		- now restart Xming. It is important to close it from the icon tray and than open it, otherwise, the changes in the .hosts file will not be applied and it will not work. <br>
+		- now restart Xming. It is important to close it from the icon tray and then open it, otherwise, the changes in the .hosts file will not be applied and it will not work. <br>
 		```docker run -it --rm -e "DISPLAY=$(ip_of_host_machine):0.0 dorincatladish123/pysurfs```
 	- ### Remote Display Outside Network[](#remote-display-outside-network)
 		- create an ssh connection between the host machine and client machine (you will need port fowarding)
@@ -108,4 +108,4 @@ hence, the container needs to be provided with capability to have a monitor inte
 ![image](https://user-images.githubusercontent.com/90141260/200126462-8d9d6829-d4e1-4276-a843-0fa647ea0423.png)
 
 Known Issues:
-1. Under the Settings button, there are to tabs: 'Sites' and 'SETTINGS', it is more logical to exclude the 'SETTINGS' to its' own button, and disable only 'Sites' before a decipher has been made.
+1. Under the Settings button, there are two tabs: 'Sites' and 'SETTINGS', it is more logical to exclude the 'SETTINGS' to its own button, and disable only 'Sites' before a decipher has been made.
