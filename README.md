@@ -27,6 +27,7 @@ hence, the container needs to be provided with capability to have a monitor inte
 3. Throughtout my expedition I saw toturials that introduce the concept between X-Server and containers, but I didn't like some security gaps that were provided in those toturials. Hence I've learned about secrets, ssh-keygen and ssh (already had some exprence with it, but also achived to sshing from an Ubuntu\Windows to Windows from different networks which felt quite adventorous).
 4. RSA is most commonly used by now but it is recomended to use ecdh as rsa is repeteadly being under cracking for years.
 5. Pushing and pulling into and outof dockerhub.
+6. In WSL the .Xauthority already exists an it simplifies the process (:
 
 ## Requierments[](#requierments)
 - Download and install Xming Server (X-Server) [Xming Server](https://sourceforge.net/projects/xming).
@@ -62,9 +63,9 @@ hence, the container needs to be provided with capability to have a monitor inte
      			You can simply run your application without configuring anything. Xming configurations already accept localhost connections because there is no security risk. Just type into the command line:
 				```docker run -it --rm -e "DISPLAY=host.docker.internal:0.0" dorincatladish123/pysurfs```
 			- ### Remote Display Within Network[](#remote-display-within-network)
-			first lets establish a common language: <br>
-			host machine - is the machine where the necessary display (screen) is. <br>
-			client machine - the machine from which you will be running the GUI application. <br>
+				first lets establish a common language: <br>
+				host machine - is the machine where the necessary display (screen) is. <br>
+				client machine - the machine from which you will be running the GUI application. <br>
 			- client machine: open a command line from the client and type 'ipconfig', find the IPV4 (something like 192.168.0.1 or 10.0.0.x), (use the Wireless LAN adapter Wi-Fi if you are connected to wifi, etc..)
 			- host machine: navigate to Xming directory, the path is usually "C:\Program Files (x86)\Xming" and open *.hosts file, enter the IPV4 of the client machine to that file.)
 			- now restart Xming. It is important to close it from the icon tray and than open it, otherwise, the changes in the .hosts file will not be applied and it will not work. <br>
