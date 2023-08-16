@@ -5,7 +5,7 @@ You provide it with a record of wireshark program of internet traffic and the po
 ### A year passed since I've first uploaded this GUI app, and I decided that I want to try to dockerize it.
 why?<br>
 I wanted to gain some knowledge and have hands-on practice with Docker.
-But things quickly escalated (which is typical in Software Engineering), so I decided to write this tutorial about how to deploy GUI applications to docker.<br>
+But things quickly escalated (which is typical in Software Engineering), so I decided to write this tutorial about how to deploy GUI applications to Docker.<br>
 I've spent some time learning new subjects, programs and libraries that in the end achieved the result. <br>
 I'VE DEPLOYED A GUI APP TO DOCKER
 
