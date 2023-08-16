@@ -74,7 +74,7 @@ hence, the container needs to be provided with capability to have a monitor inte
 
 ---
 - #### No such file or directory '.Xauthority' Error[](#no-such-file-or-directory-.xauthority-error)
-	Another common error when using Xauthority is that traceback.
+	Another common error when using Xauthority is this traceback:
 	```
 	Traceback (most recent call last):
 	  File "/app/main.py", line 3, in <module>
